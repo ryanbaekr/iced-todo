@@ -1,0 +1,24 @@
+[package]
+name = "iced-todo-gui"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "icedtodogui"
+path = "src/main.rs"
+
+[dependencies]
+iced = { workspace = true, features = [
+    "wgpu",
+    "tiny-skia",
+    "fira-sans",
+    "tokio",
+    "advanced",
+    "image",
+    "svg",
+    "wayland",
+    "x11",
+    "crisp",
+    "web-colors",
+    "highlighter",
+] }

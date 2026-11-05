@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = ["iced-todo-gui"]
+
+[workspace.dependencies]
+iced = { version = "0.14", default-features = false }
