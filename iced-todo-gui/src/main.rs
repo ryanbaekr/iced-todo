@@ -1,8 +1,15 @@
-use iced::widget::{Column, TextInput, button, column, row, text};
+use iced::widget::text::Wrapping;
+use iced::widget::{Column, TextInput, button, column, container, row, scrollable, text};
 use iced::{Center, Length};
 
 pub fn main() -> iced::Result {
-    iced::run(App::update, App::view)
+    iced::application(App::default, App::update, App::view)
+        .window(iced::window::Settings {
+            size: iced::Size::new(720.0, 540.0),
+            min_size: Some(iced::Size::new(480.0, 360.0)),
+            ..iced::window::Settings::default()
+        })
+        .run()
 }
 
 #[derive(Default)]
@@ -50,19 +57,30 @@ impl App {
     }
 
     fn view(&self) -> Column<'_, Message> {
-        let mut task_list = Column::new().spacing(8);
+        let mut task_list = Column::new().width(Length::Fill).align_x(Center).spacing(8);
 
         if self.tasks.is_empty() {
             task_list = task_list.push(text("No tasks yet. Add one above!").size(14));
         }
 
         for task in &self.tasks {
-            task_list = task_list.push(row![
-                text(&task.text),
-                button("Remove")
-                    .on_press(Message::RemoveTask(task.id))
-                    .width(Length::Fixed(80.0)),
-            ]);
+            task_list = task_list.push(
+                container(
+                    row![
+                        text(&task.text)
+                            .width(Length::Fill)
+                            .wrapping(Wrapping::WordOrGlyph),
+                        button("Remove")
+                            .on_press(Message::RemoveTask(task.id))
+                            .width(Length::Fixed(80.0)),
+                    ]
+                    .width(Length::Fill)
+                    .spacing(8),
+                )
+                .width(Length::Fill)
+                .padding(10)
+                .style(container::rounded_box),
+            );
         }
 
         column![
@@ -72,10 +90,15 @@ impl App {
                     .on_input(Message::InputChanged)
                     .on_submit(Message::AddTask),
                 button("Add").on_press(Message::AddTask),
-            ],
-            task_list,
+            ]
+            .padding(10),
+            scrollable(task_list)
+                .width(Length::Fill)
+                .height(Length::Fill)
+                .spacing(10),
         ]
         .width(Length::Fill)
+        .height(Length::Fill)
         .align_x(Center)
         .padding(20)
     }
