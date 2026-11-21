@@ -7,6 +7,7 @@ use iced::{Center, Length};
 
 pub fn main() -> iced::Result {
     iced::application(boot, App::update, App::view)
+        .theme(iced::Theme::Nord)
         .window(iced::window::Settings {
             size: iced::Size::new(720.0, 540.0),
             min_size: Some(iced::Size::new(480.0, 360.0)),
