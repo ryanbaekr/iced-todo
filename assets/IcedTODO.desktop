@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=IcedTODO
+Comment=A simple todo list application
+Exec=IcedTODO
+Icon=IcedTODO
+Type=Application
+Terminal=false
+Categories=Utility;

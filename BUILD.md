@@ -7,7 +7,7 @@
 - Install the necessary system libraries:
 
   ```sh
-  script/linux
+  ./script/linux
   ```
 
 ## Building from source
